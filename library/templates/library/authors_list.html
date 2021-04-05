@@ -1,0 +1,27 @@
+{% extends 'library/base.html' %}
+
+{% block read %}
+	<style type="text/css">
+		body {
+			background-image: url(https://lh3.googleusercontent.com/j4rLfu8uDmbEHr6WzydyNELISJ_RtsI3ys3R1ulAeO_vRTQNRtSOgVPpLULkwJlZVE67lzrhRgfXhUZiEL-vbjvjqJN7VISAqxv6qHj50jskLgpRaYsxv9QxnzYVhxsX1UAJs5KLhNBkPcfNI8VenmnwDDV6WTVQIBABKH_o73euvaH9084wJ2WmumYkWIahW_rKUG3UL0Yiq-yalOz9LhCUwLvqZrmfyOxIXU0xcdgCXc5RpqCpsYSiVc8ObDU9JpaOOk_pCg0c_wYvVxsMedDXMGzH6PYTHgjJVTpx-ZffoTDPGsuO1YSpkN4XnoqIOaUJiecqNfoyJu4n2qXVVcLlKcHZv7lbSxgsyt6OMO-wdumZ-gXYiCMET2Q0OM3B0Mdb__W5uFPTzmKTZAv9EbW0BRed6wCBESVfgQGLLgu9VyvsHpmQlwJF3KvwqwRbTCCVay-hKnJQhPTbw5j7ogYAdlbVMxutAQ1xi78s3hJpCWht3xcn3hMVKkTX5i5wfWNiz-wFRNiBnsUWZmz91nwFYN3r5zNrEVX8BaIUidaRhbJcvKQtW_Qf9qF27DB19L9lxBL_G4yz9KLG7S5vOd0xwJuMNXoZCWJmaZPhLUhMdehNjpFZRQM0gDEMteSdAPCNI1IhI-ZCN2S218ZufKZFY_iEwmat81vRf4KezGVG6qSFGAK3gBYPIk6GRt107wyZKuzwhTi9s0FD6QcB8Wk=w1280-h854-no?authuser=0);
+			background-size: 100%;
+			background-attachment: fixed;
+		}	
+			.card {
+			font-size: 14pt;
+			background-color: #FFFACD;
+		}
+	</style>
+
+	<div class="card mb-3">
+		{% for author in authors %}
+			
+			<h2 align='center'><a href="{% url 'author_page_url' slug=author.slug %}">{{author.name}}(<i>книг - {{author.books.all|length}}</i>)</a></h2>
+			<hr>
+			
+		{% endfor %}
+		<p align='center'>
+			<a href="{% url 'books_list_url' %}" class="btn btn-warning">На главную</a>
+		</p>
+	</div>	
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'library/base.html' %}
+
+{% block title %}
+	{{book.title}} - {{block.super}}
+{% endblock %}
+
+{% block read %}
+
+	<style>
+		body {
+			background-image: url(https://lh3.googleusercontent.com/qDY3HGzhfo-bnkhpPWAciIa6Fek1f_Grev_jymLupjSj3SVDPSTrjQxGe8p13jNd7NZEo3LbR_fbGajPFf8p_w73s5QxqK-OA-W9EXF0WSJe1gs6eEp9OcPBDVYSx65i5mVYriVZH31uJGtMkRDreHd-7vPIUE-n7Y9tgjWxSaNyJL56jUWANGBUBWIYV5xE6YsSldbJQl_-p6xu5EWi_sQETXmFFJc-VnymB8YitrPP5HIubOZvCtIVws0XrBEPB8bKX_mF5tHIDPdXHHhQFs18TwU5OdCVQ3jPwn0rO7GX8mIj9Jd6XzQltlTBK4BizK1MIn891ENwpVFe2VErsQt-U1uiqIUCcO5IzkNN4JWHEzgfpGoDM-fdZg8cr_-BxDOGHOJ_D8_bBai87z79f4pPm_27edJvSz6osv8fpv-hv1I_9C7MqT5u4SsQVb5Y-ggRO3HwCermTunXI7_cIGfBiuOxNXDcuYZ3LwvYwK6Z7mo8ZQuCj_1jA5R5kWxacnLxEW2D5rCLwLuEDbYSKqNtLkqxZSbupaqy-ADQuoMErF9NqJGeT0rJ9uMPAa6xdyzrUNJw3CubII7m507DPLsnWYAbc5BcBvNM4kLtuDLq6G_Uk6TQOB2l7OHDWT1IAtXrOuO5GExQ7L0mpqZnotzjC13N6zP4vZFrnKtuKuRhHZgT4sZHczDTfLbi8G-7VllbWK-1NhzPZDOvnmsQ6y8=w1280-h769-no?authuser=0);
+			background-size: 100%;
+			background-attachment: fixed;
+		}
+		
+	</style>	
+	
+	<div class="card mb-3">
+		<div class="card-body">
+			<h1 class="card-title" align="center">{{book.title}}</h1>
+			<div align='center'><img src="{{book.image}}" width=400 height=450></div>
+			
+				<p class="card-text">{{book.text|linebreaksbr}}</p>
+			
+			
+			<p align='right'><b><i>{{book.author}}</i></b></p>
+			<p align='center'>
+				<a href="{% url 'books_list_url' %}" class="btn btn-warning">На главную</a>
+			</p>
+		</div>
+	</div>	
+
+{% endblock %}	
