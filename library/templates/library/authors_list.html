@@ -17,6 +17,9 @@
 		{% for author in authors %}
 			
 			<h2 align='center'><a href="{% url 'author_page_url' slug=author.slug %}">{{author.name}}(<i>книг - {{author.books.all|length}}</i>)</a></h2>
+			{% if user.is_authenticated %}
+				<p align="center"><a href="{% url 'edit_author_url' slug=author.slug %}" class='alert alert-warning'>Редактировать</a></p>
+			{% endif %}	
 			<hr>
 			
 		{% endfor %}

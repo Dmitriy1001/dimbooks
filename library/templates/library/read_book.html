@@ -17,12 +17,15 @@
 	
 	<div class="card mb-3">
 		<div class="card-body">
+			{% if user.is_authenticated %}
+				<p align="right">
+					<a href="{% url 'edit_book_url' slug=book.slug %}" class='alert alert-warning'>Редактировать</a>
+					<a href="{% url 'delete_book_url' slug=book.slug %}" class='alert alert-danger'>Удалить</a>
+				</p>
+			{% endif %}
 			<h1 class="card-title" align="center">{{book.title}}</h1>
 			<div align='center'><img src="{{book.image}}" width=400 height=450></div>
-			
-				<p class="card-text">{{book.text|linebreaksbr}}</p>
-			
-			
+			<p class="card-text">{{book.text|linebreaksbr}}</p>
 			<p align='right'><b><i>{{book.author}}</i></b></p>
 			<p align='center'>
 				<a href="{% url 'books_list_url' %}" class="btn btn-warning">На главную</a>

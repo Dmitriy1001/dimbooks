@@ -6,6 +6,12 @@
 		<p>
 			<i>{{book.pub_date}}</i> | <b>Автор:</b> <a href="{% url 'author_page_url' slug=book.author.slug %}">{{book.author}}</a>
 		</p>
+		{% if user.is_authenticated %}
+			<p>
+				<a href="{% url 'edit_book_url' slug=book.slug %}" class='alert alert-warning'>Редактировать</a>
+				<a href="{% url 'delete_book_url' slug=book.slug %}" class='alert alert-danger'>Удалить</a>
+			</p>
+		{% endif %}	
 		<img src="{{book.image}}" width="250" height="350">
 
 		<p>{{book.annotation}}</p>

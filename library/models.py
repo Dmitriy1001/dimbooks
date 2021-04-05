@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.shortcuts import reverse
 # Create your models here.
 
 class Book(models.Model):
@@ -16,6 +16,9 @@ class Book(models.Model):
 		verbose_name_plural = 'Книги'
 		ordering = ['-pub_date']
 
+	def get_absolute_url(self):
+		return reverse('read_book_url', kwargs={'slug': self.slug})
+
 	def __str__(self):
 		return self.title
 
@@ -30,6 +33,9 @@ class Author(models.Model):
 		verbose_name = 'автора'
 		verbose_name_plural = 'Авторы'
 		ordering = ['name']
+
+	def get_absolute_url(self):
+		return reverse('author_page_url', kwargs={'slug': self.slug})
 
 	def __str__(self):
 		return self.name

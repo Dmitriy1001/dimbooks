@@ -1,0 +1,14 @@
+{% extends 'library/base.html' %}
+
+{% block title %}
+	Удаление книги "{{book.title}}" - {{book.super}}
+{% endblock %}
+
+{% block content %}
+	<form action="{% url 'delete_book_url' slug=book.slug %}" method="post">
+		{% csrf_token %}
+		<h1 style="color: #8B0000">Вы уверены, что хотите удалить книгу "{{book.title}}"?</h1>
+		<a href="javascript:history.back()" class="btn btn-warning">назад</a>
+		<button type="submit" class="btn btn-danger">удалить</button>
+	</form>
+{% endblock %}
