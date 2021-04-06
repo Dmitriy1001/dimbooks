@@ -14,7 +14,6 @@
 		}
 
 		
-		
 	</style>	
 	
 	<div class="card mb-3">
@@ -25,14 +24,52 @@
 					<a href="{% url 'delete_book_url' slug=book.slug %}" class='alert alert-danger'>Удалить</a>
 				</p>
 			{% endif %}
-			<h1 class="card-title" align="center">{{book.title}}</h1>
+			<div align="center">
+				<h1 class="card-title" >{{book.title}}</h1>
+				<h4><b><i>{{book.author}}</i></b></h4>
+			</div>
+			<br>	
 			<div align='center'><img src="{{book.image}}" width=400 height=450></div>
-			<p class="card-text">{{book.text|linebreaksbr}}</p>
-			<p align='right'><b><i>{{book.author}}</i></b></p>
+			<br>
+			
+			{{text|join:''|linebreaksbr}}
+			<br>
+			{% if is_paginated %}
+			
+				<nav aria-label="...">
+					<ul class="pagination justify-content-center">
+						<li class="page-item {% if not prev_url %}disabled{% endif %}">
+							<a class="page-link" href="{{prev_url}}" tabindex="-1">предыдущая</a>
+						</li>
+
+						{% for n in page.paginator.page_range %}
+						{% if page.number == n %}
+						<li class="page-item active">
+							<a class="page-link" href="?page={{n}}">{{n}}<span class="sr-only">(current)</span></a>
+						</li>
+						{% elif n > page.number|add:-3 and n < page.number|add:3 %}
+						<li class="page-item">
+							<a class="page-link" href="?page={{n}}">{{n}}</a>
+						</li>
+						{% endif %}	
+						{% endfor %}
+
+						<li class="page-item {% if not next_url %}disabled{% endif %}">
+							<a class="page-link" href="{{next_url}}" tabindex="-1">следующая</a>
+						</li>
+					</ul>
+				</nav>
+			
+			{% endif %}
+			
 			<p align='center'>
 				<a href="{% url 'books_list_url' %}" class="btn btn-warning">На главную</a>
 			</p>
+				
 		</div>
-	</div>	
+	</div>
 
-{% endblock %}	
+		
+
+{% endblock %}
+

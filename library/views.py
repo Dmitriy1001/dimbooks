@@ -43,10 +43,29 @@ def books_list(request):
 
 def read_book(request, slug):
 	book = Book.objects.get(slug=slug)
-	paginator = Paginator(book.text, 3)
+	paginator = Paginator(book.text.split('\n'), 50)
 	page_number = request.GET.get('page', 1)
 	page = paginator.get_page(page_number)
-	return render(request, 'library/read_book.html', {'book': book, 'page': page})
+	is_paginated = page.has_other_pages()
+
+	if page.has_previous():
+		prev_url = f'?page={page.previous_page_number()}'
+	else:
+		prev_url = ''
+	if page.has_next():
+		next_url = f'?page={page.next_page_number()}'
+	else:
+		next_url = ''
+
+	context = {
+		'book': book,
+		'page': page, 
+		'text': page.object_list,
+		'is_paginated': is_paginated,
+		'prev_url': prev_url,
+		'next_url': next_url
+	}	
+	return render(request, 'library/read_book.html', context)
 
 class AddBook(AddObject, View):
 	form_model = BookAddForm
