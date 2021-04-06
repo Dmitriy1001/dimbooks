@@ -21,7 +21,9 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<span class="navbar-brand">
-				<i><h3>DimBooks</h3></i>
+				<i>
+					<h3>DimBooks</h3>
+				</i>
 			</span>
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 				<li class="nav-item">
@@ -33,6 +35,9 @@
 				{% if user.is_authenticated %}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'add_book_url' %}"><h4>Добавить книгу</h4></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'add_author_url' %}"><h4>Добавить автора</h4></a>
 					</li>
 				{% endif %}	
 			</ul>
@@ -62,7 +67,6 @@
 		</div>
 	</div>
 
-	
 	<div class="card-group">
 		<div class="row offset-md-1">
 			{% block authors %}

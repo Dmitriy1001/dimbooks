@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.views.generic import View
 
 from .models import Book, Author
-from .forms import BookEditForm, AuthorEditForm, BookAddForm
+from .forms import BookEditForm, AuthorEditForm, BookAddForm, AuthorAddForm
 from .utils import EditObject, AddObject, DeleteObject
 # Create your views here.
 
@@ -25,11 +25,11 @@ def books_list(request):
 	is_paginated = page.has_other_pages()
 
 	if page.has_previous():
-		prev_url = f'?page={page.previous_page_number}'
+		prev_url = f'?page={page.previous_page_number()}'
 	else:
 		prev_url = ''
 	if page.has_next():
-		next_url = f'?page={page.next_page_number}'
+		next_url = f'?page={page.next_page_number()}'
 	else:
 		next_url = ''
 
@@ -48,14 +48,14 @@ def read_book(request, slug):
 	page = paginator.get_page(page_number)
 	return render(request, 'library/read_book.html', {'book': book, 'page': page})
 
+class AddBook(AddObject, View):
+	form_model = BookAddForm
+	template = 'library/add_book.html'
+
 class EditBook(EditObject, View):
 	model = Book
 	form_model = BookEditForm
 	template = 'library/edit_book.html'
-
-class AddBook(AddObject, View):
-	form_model = BookAddForm
-	template = 'library/add_book.html'
 
 class DeleteBook(DeleteObject, View):
 	model = Book
@@ -69,7 +69,7 @@ def authors_list(request):
 	return render(request, 'library/authors_list.html', {'authors': authors})
 
 def author_page(request, slug):
-	author = Author.objects.get(slug=slug)
+	author = Author.objects.get(slug__iexact=slug)
 	books = author.books.all()
 	paginator = Paginator(books, 3)
 	page_number = request.GET.get('page', 1)
@@ -77,11 +77,11 @@ def author_page(request, slug):
 	is_paginated = page.has_other_pages()
 
 	if page.has_previous():
-		prev_url = f'?page={page.previous_page_number}'
+		prev_url = f'?page={page.previous_page_number()}'
 	else:
 		prev_url = ''
 	if page.has_next():
-		next_url = f'?page={page.next_page_number}'
+		next_url = f'?page={page.next_page_number()}'
 	else:
 		next_url = ''
 
@@ -92,11 +92,19 @@ def author_page(request, slug):
 		'prev_url': prev_url,
 		'next_url': next_url
 	}
-	return render(request, 'library/books_list.html', context)
+	return render(request, 'library/author_page.html', context)
 	
+class AddAuthor(AddObject, View):
+	form_model = AuthorAddForm
+	template = 'library/add_author.html'
 
 class EditAuthor(EditObject, View):
 	model = Author
 	form_model = AuthorEditForm
 	template = 'library/edit_author.html'
+
+class DeleteAuthor(DeleteObject, View):
+	model = Author
+	template = 'library/delete_author.html'
+	redirect_url = 'authors_list_url'	
 					

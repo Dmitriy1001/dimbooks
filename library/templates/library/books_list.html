@@ -4,7 +4,7 @@
 	{% for book in page %}
 		<h2>{{book.title}}</h2>
 		<p>
-			<i>{{book.pub_date}}</i> | <b>Автор:</b> <a href="{% url 'author_page_url' slug=book.author.slug %}">{{book.author}}</a>
+			<i class="date">{{book.pub_date}}</i> | <b>Автор:</b> <a href="{% url 'author_page_url' slug=book.author.slug %}">{{book.author}}</a>
 		</p>
 		{% if user.is_authenticated %}
 			<p>
@@ -12,7 +12,7 @@
 				<a href="{% url 'delete_book_url' slug=book.slug %}" class='alert alert-danger'>Удалить</a>
 			</p>
 		{% endif %}	
-		<img src="{{book.image}}" width="250" height="350">
+		<img src="{{book.image}}" width="250" height="350" class="mb-2">
 
 		<p>{{book.annotation}}</p>
 		<a href="{% url 'read_book_url' slug=book.slug %}">

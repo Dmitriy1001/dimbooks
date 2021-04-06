@@ -1,9 +1,12 @@
 {% extends 'library/base.html' %}
 
-{% block  read %}
+{% block read %}
 	<br>
 	{% if user.is_authenticated %}
-		<p align="right"><a href="{% url 'edit_author_url' slug=author.slug %}" class='alert alert-warning'>Редактировать</a></p>
+		<p align="right">
+			<a href="{% url 'edit_author_url' slug=author.slug %}" class='alert alert-warning'>Редактировать</a>
+			<a href="{% url 'delete_author_url' slug=author.slug %}" class='alert alert-danger'>Удалить</a>
+		</p>
 	{% endif %}
 	<div align='center'>
 		<img src="{{author.image}}"  width="225" height="300">
@@ -13,15 +16,15 @@
 		{{author.about}}
 		
 	</p>
-	<hr style='width: 250%; margin-left: -115%;'>
+	<hr class='author-hr'>
 {% endblock %}
 
 {% block content %}	
-	{% for book in author.books.all %}
+	{% for book in page %}
 
 		<h2>{{book.title}}</h2>
 		<p>
-			<i>{{book.pub_date}}</i> | <b>Автор:</b> <a href="">{{book.author}}</a>
+			<i>{{book.pub_date}}</i> | <b>Автор:</b> <a href="">{{book.author}}!</a>
 		</p>
 		<img src="{{book.image}}" width="250" height="350">
 		<p>{{book.annotation}}</p>
