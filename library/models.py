@@ -10,6 +10,7 @@ class Book(models.Model):
 	annotation = models.TextField(blank=True)
 	text = models.TextField()
 	pub_date = models.DateTimeField(auto_now_add=True)
+	objs_on_page = 3
 
 	class Meta:
 		verbose_name = 'книгу'

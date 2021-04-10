@@ -24,7 +24,7 @@
 
 		<h2>{{book.title}}</h2>
 		<p>
-			<i>{{book.pub_date}}</i> | <b>Автор:</b> <a href="">{{book.author}}!</a>
+			<i>{{book.pub_date}}</i> | <b>Автор:</b> <a href="">{{book.author}}</a>
 		</p>
 		<img src="{{book.image}}" width="250" height="350">
 		<p>{{book.annotation}}</p>
@@ -38,28 +38,6 @@
 
 {% block pagination %}
 	{% if is_paginated %}
-		<nav aria-label="...">
-			<ul class="pagination">
-				<li class="page-item {% if not prev_url %}disabled{% endif %}">
-					<a class="page-link" href="{{prev_url}}" tabindex="-1">предыдущая</a>
-				</li>
-
-				{% for n in page.paginator.page_range %}
-					{% if page.number == n %}
-						<li class="page-item active">
-							<a class="page-link" href="?page={{n}}">{{n}}<span class="sr-only">(current)</span></a>
-						</li>
-					{% elif n > page.number|add:-3 and n < page.number|add:3 %}
-						<li class="page-item">
-							<a class="page-link" href="?page={{n}}">{{n}}</a>
-						</li>
-					{% endif %}	
-				{% endfor %}
-
-				<li class="page-item {% if not next_url %}disabled{% endif %}">
-					<a class="page-link" href="{{next_url}}" tabindex="-1">следующая</a>
-				</li>
-			</ul>
-		</nav>
+		{% include 'library/includes/pagination.html' %}
 	{% endif %}	
 {% endblock %}
