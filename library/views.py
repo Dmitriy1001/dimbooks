@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.views.generic import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Book, Author
 from .forms import BookEditForm, AuthorEditForm, BookAddForm, AuthorAddForm
@@ -28,19 +29,22 @@ def read_book(request, slug):
 	return render(request, 'library/read_book.html', context)
 
 	
-class AddBook(AddObject, View):
+class AddBook(LoginRequiredMixin, AddObject, View):
 	form_model = BookAddForm
 	template = 'library/add_book.html'
+	raise_exception = True
 
-class EditBook(EditObject, View):
+class EditBook(LoginRequiredMixin, EditObject, View):
 	model = Book
 	form_model = BookEditForm
 	template = 'library/edit_book.html'
+	raise_exception = True
 
-class DeleteBook(DeleteObject, View):
+class DeleteBook(LoginRequiredMixin, DeleteObject, View):
 	model = Book
 	template = 'library/delete_book.html'
-	redirect_url = 'books_list_url'					
+	redirect_url = 'books_list_url'		
+	raise_exception = True			
 
 # Author
 
@@ -52,40 +56,24 @@ def authors_list(request):
 def author_page(request, slug):
 	author = Author.objects.get(slug__iexact=slug)
 	books = author.books.all()
-	paginator = Paginator(books, 3)
-	page_number = request.GET.get('page', 1)
-	page = paginator.get_page(page_number)
-	is_paginated = page.has_other_pages()
-
-	if page.has_previous():
-		prev_url = f'?page={page.previous_page_number()}'
-	else:
-		prev_url = ''
-	if page.has_next():
-		next_url = f'?page={page.next_page_number()}'
-	else:
-		next_url = ''
-
-	context = {
-		'author': author,
-		'page': page,
-		'is_paginated': is_paginated,
-		'prev_url': prev_url,
-		'next_url': next_url
-	}
+	context = pagination(request, books, 3)
+	context['author'] = author
 	return render(request, 'library/author_page.html', context)
 	
-class AddAuthor(AddObject, View):
+class AddAuthor(LoginRequiredMixin, AddObject, View):
 	form_model = AuthorAddForm
 	template = 'library/add_author.html'
+	raise_exception = True
 
-class EditAuthor(EditObject, View):
+class EditAuthor(LoginRequiredMixin, EditObject, View):
 	model = Author
 	form_model = AuthorEditForm
 	template = 'library/edit_author.html'
+	raise_exception = True
 
-class DeleteAuthor(DeleteObject, View):
+class DeleteAuthor(LoginRequiredMixin, DeleteObject, View):
 	model = Author
 	template = 'library/delete_author.html'
 	redirect_url = 'authors_list_url'	
+	raise_exception = True
 					
