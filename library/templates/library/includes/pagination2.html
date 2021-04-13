@@ -1,0 +1,15 @@
+<div align='center'>
+	
+	{% if page.has_previous %}
+		<a href="{{prev_url}}" style="color:#00abff; text-decoration:none;">предыдущая </a>
+	{% endif %}
+
+	<span class="current">
+		<b>страница {{ page.number }} из {{ page.paginator.num_pages }}</b>
+	</span>
+
+	{% if page.has_next %}
+		<a href="{{next_url}}" style="color:#00abff; text-decoration:none;"> следующая</a>
+	{% endif %}
+	
+</div>	

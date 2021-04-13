@@ -27,16 +27,13 @@
 				<h4><b><i>{{book.author}}</i></b></h4>
 			</div>
 			<br>	
-			<div align='center'>
-				<img src="{{book.image}}" width=350 height=450>
-			</div>
-			<br>
+			<hr>
 			
 			{{page.object_list|join:''|linebreaksbr}}
 			<br>
 			{% if is_paginated %}
 			
-				{% include 'library/includes/pagination.html' %}
+				{% include 'library/includes/pagination2.html' %}
 			
 			{% endif %}
 			
