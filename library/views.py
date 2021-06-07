@@ -4,9 +4,13 @@ from django.db.models import Q
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
 from .models import Book, Author
 from .forms import BookEditForm, AuthorEditForm, BookAddForm, AuthorAddForm
 from .utils import EditObject, AddObject, DeleteObject, pagination, what_page
+from .serializers import BookSerializer, AuthorSerializer
 # Create your views here.
 
 # Book
@@ -76,4 +80,38 @@ class DeleteAuthor(LoginRequiredMixin, DeleteObject, View):
 	template = 'library/delete_author.html'
 	redirect_url = 'authors_list_url'	
 	raise_exception = True
-					
+
+
+# API
+
+@api_view(['GET'])
+def api_books_list(request):
+	if request.method == 'GET':
+		books = Book.objects.all()
+		data = BookSerializer(books, many=True).data
+		return Response(data)
+
+@api_view(['GET'])
+def api_read_book(request, slug):
+	if request.method == 'GET':
+		book = Book.objects.get(slug=slug)
+		data = BookSerializer(book).data
+		data['text'] = book.text
+		return Response(data)
+
+
+@api_view(['GET'])
+def api_authors_list(request):
+	if request.method == 'GET':
+		authors = Author.objects.all()
+		data = AuthorSerializer(authors, many=True).data
+		return Response(data)
+
+@api_view(['GET'])
+def api_author_page(request, slug):
+	if request.method == 'GET':
+		author = Author.objects.get(slug=slug)
+		data = AuthorSerializer(author).data
+		data['about'] = author.about
+		data['books'] = [book.title for book in author.books.all()]
+		return Response(data)

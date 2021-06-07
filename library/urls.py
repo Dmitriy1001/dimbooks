@@ -15,4 +15,10 @@ urlpatterns = [
 	path('author/<slug>/', author_page, name='author_page_url'),
 	path('author/<slug>/edit/', EditAuthor.as_view(), name='edit_author_url'),
 	path('author/<slug>/delete/', DeleteAuthor.as_view(), name='delete_author_url'),
+
+	# api
+	path('api/books/', api_books_list),
+	path('api/book/<slug>', api_read_book),
+	path('api/authors/', api_authors_list),
+	path('api/author/<slug>', api_author_page),
 ]
